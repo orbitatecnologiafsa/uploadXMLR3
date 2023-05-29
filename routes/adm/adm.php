@@ -27,8 +27,8 @@ Route::middleware('is_adm')->controller(AdmController::class)->prefix('adm')->gr
     Route::get('/busca', 'getCliente')->name('adm-busca-cliente-lista');
     Route::get('/busca-cliente','getClienteByCampo')->name('adm-busca-cliente');
     Route::get('/busca-files/{busca}', 'getFiles')->name('adm-busca-cliente-files');
-    Route::get('/dowload/{busca}', 'dowloadFiles')->name('adm-busca-cliente-files-download');
-
+    Route::get('/dowload/{busca}/', 'getPasta')->name('adm-busca-cliente-files-pasta');
+  
 });
 
 
