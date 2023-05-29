@@ -23,9 +23,10 @@ class UploadXmlRepositorio
                         File::makeDirectory($diretorioDestino, 0755, true);
                         // Remove a pasta existente e todos os seus conteúdos
                         // File::deleteDirectory($diretorioDestino);
-                        if (!File::exists($diretorioDestino . '/' . $nomePasta)) {
-                            File::makeDirectory($diretorioDestino . '/' . $nomePasta, 0755, true);
-                        }
+
+                    }
+                    if (!File::exists($diretorioDestino . '/' . $nomePasta)) {
+                        File::makeDirectory($diretorioDestino . '/' . $nomePasta, 0755, true);
                     }
                     $validar = true;
                 }
