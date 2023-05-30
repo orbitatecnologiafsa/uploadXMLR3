@@ -11,6 +11,11 @@
     @include('adm.partial.navbar')
 @endpush
 @section('conteudo')
+    @if ($ultimo_up != '')
+        <div class="container-fluid py-4">
+            <h4 class="text-white">Ultima atualização {{ date('d/m/Y H:i:s',strtotime($ultimo_up)) }}</h4>
+        </div>
+    @endif
     <div class="container-fluid py-4" style="bottom: 300px;">
         <form method="get" action="{{ route('adm-busca-cliente-files-pasta', $cliente->documento . '/') }}">
             <div class="card" style="margin-top: 100px;">
@@ -22,20 +27,20 @@
                 </div>
                 <div class="col-md-5 pb-0 p-3">
                     @if ($download == '')
-                    <div class="form-group">
-                        <div class="input-group input-group-alternative mb-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-alternative mb-3">
 
-                            <select class="form-control" id="" name="busca_pasta">
-                                @foreach ($pastas as $pasta)
-                                    <option value="{{ $pasta }}">{{ $pasta }}</option>
-                                @endforeach
+                                <select class="form-control" id="" name="busca_pasta">
+                                    @foreach ($pastas as $pasta)
+                                        <option value="{{ $pasta }}">{{ $pasta }}</option>
+                                    @endforeach
 
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                    </div>
                     @else
-                    <h6 class="mb-2"> Xml gerado  {{request()->input('busca_pasta').".zip"}}
-                    </h6>
+                        <h6 class="mb-2"> Xml gerado {{ request()->input('busca_pasta') . '.zip' }}
+                        </h6>
                     @endif
                     @error('cliente')
                         <div class="error " style="color:red">{{ $message }}</div>
@@ -52,7 +57,6 @@
                                 Gerar novo xml</a>
                         @else
                             <button class=" btn btn-primary  active">Gerar xml</button>
-
                         @endif
 
 

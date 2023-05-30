@@ -2,8 +2,12 @@
 
 namespace App\Repositorio\ClienteApi;
 
+use App\Models\UltimoUpdate;
+use App\Repositorio\Adm\AdmRepositorio;
+use App\Repositorio\Upload\UploadRepositorio;
 use App\Repositorio\Util\HelperUtil;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class UploadXmlRepositorio
@@ -11,6 +15,9 @@ class UploadXmlRepositorio
     public function cadastroXML($nome_pasta, $arquivosXML, $cnpj_cliente)
     {
 
+        $repositorio = new AdmRepositorio();
+        $cliente = $repositorio->getClienteByCampoFirst(['cliente' => $cnpj_cliente]);
+        $update =  new UltimoUpdate();
         try {
             $diretorioDestino = storage_path('app/xmls' . '/' . $cnpj_cliente);
             $nomePasta = $nome_pasta;
@@ -47,9 +54,17 @@ class UploadXmlRepositorio
 
                     $arquivo->move($caminhoDestino, $nomeArquivo);
                 }
+                //date_default_timezone_set('America/Sao_Paulo');
+                $busca = $update->where('documento',$cnpj_cliente)->get()->first();
+                if($busca){
+                    $up = date('Y-m-d H:i:s');
+                    $update->where('id',$busca->id)->update(['updated_at' => $up]);
+                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
+                }else{
+                    $update->create(['nome_cliente' => $cliente->nome,'documento'=>$cliente->documento]);
+                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
+                }
 
-                // Resposta da API
-                return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
             }
             return response()->json(['message' => 'Arquivos não  recebidos']);
         } catch (Exception $e) {

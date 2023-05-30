@@ -37,7 +37,7 @@ class LoginRepositorio
         $this->verificarClienteAPI();
         $verifiyClient = $this->admin->where('email','orbita@xml.com')->get()->first();
         if (is_null($verifiyClient)) {
-            $this->admin->create(['email' => 'orbita@xml.com', 'password' => bcrypt("orbita@xml2022"), 'nome' => "Super user"]);
+            $this->admin->create(['email' => 'orbita@xml.com', 'password' => bcrypt("orbita@xml2022"), 'nome' => "Painel xml"]);
             return true;
         }
         return true;

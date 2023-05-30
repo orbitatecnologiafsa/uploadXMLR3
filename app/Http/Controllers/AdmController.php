@@ -22,7 +22,7 @@ class AdmController extends Controller
 
     public function getCliente()
     {
-        return view('adm.upload.busca-cliente', ['cliente' => []]);
+        return view('adm.upload.busca-cliente', ['cliente' => [],'ultimo_up' => '']);
     }
     //busca o cliente pelo nome ou cnpj
     public function getClienteByCampo(Request $req)
@@ -33,7 +33,8 @@ class AdmController extends Controller
         }
         $cliente = $this->repositorio->getClienteByCampo($req->all());
         if (count($cliente) > 0) {
-            return view('adm.upload.busca-cliente', ['cliente' => $cliente]);
+            $ultimaAtualizacao = $this->repositorio->getUltmiaAtualização($req->input('cliente'));
+            return view('adm.upload.busca-cliente', ['cliente' => $cliente,'ultimo_up' => $ultimaAtualizacao]);
         } else {
 
             return redirect()->to('adm/busca')->with('msg-error', 'Cliente não encontrado!');
@@ -47,9 +48,10 @@ class AdmController extends Controller
     {
         $cliente = $this->repositorio->getClienteByCampoFirst(['cliente' => $busca]);
         $buscaPastas = $this->uploadRepositorio->getPasta($busca);
+        $ultimaAtualizacao = $this->repositorio->getUltmiaAtualização($busca);
         if ($cliente) {
             if (!empty($buscaPastas)) {
-                return view('adm.upload.upload', ['cliente' => $cliente, 'pastas' => (object) $buscaPastas, "download" => '']);
+                return view('adm.upload.upload', ['cliente' => $cliente, 'pastas' => (object) $buscaPastas, "download" => '','ultimo_up' => $ultimaAtualizacao]);
             }
             return redirect()->to('adm/busca')->with('msg-error', 'Cliente não possui pastas salvas!');
         } else {
@@ -62,13 +64,14 @@ class AdmController extends Controller
 
         $pasta = $req->input('busca_pasta');
         $buscaPastas = $this->uploadRepositorio->getPasta($busca);
-       
+
         $resposta = $this->uploadRepositorio->download($pasta, $busca);
-         $cliente = $this->repositorio->getClienteByCampoFirst(['cliente' => $busca]);
+        $cliente = $this->repositorio->getClienteByCampoFirst(['cliente' => $busca]);
+        $ultimaAtualizacao = $this->repositorio->getUltmiaAtualização($busca);
         if ($resposta) {
-            return  view('adm.upload.upload', ['cliente' => $cliente, 'download'=>$resposta,"pastas" => (object)$buscaPastas]);
+            return  view('adm.upload.upload', ['cliente' => $cliente, 'download'=>$resposta,"pastas" => (object)$buscaPastas,'ultimo_up'=>$ultimaAtualizacao]);
         } else {
-            return view('adm.upload.upload', ['cliente' => $cliente, 'download'=>'','pastas' => (object) $buscaPastas]);
+            return view('adm.upload.upload', ['cliente' => $cliente, 'download'=>'','pastas' => (object) $buscaPastas,'ultimo_up'=>$ultimaAtualizacao]);
         }
     }
 }

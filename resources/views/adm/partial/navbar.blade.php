@@ -49,12 +49,12 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+            {{-- <li class="nav-item dropdown pe-2 d-flex align-items-center">
                 <div href="javascript:;" style="cursor: default;" class="nav-link text-white p-0"
                     id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Nivel : <span>Adm -orbita</span>
+                    Nivel : <span></span>
                 </div>
-            </li>
+            </li> --}}
 
 
 
