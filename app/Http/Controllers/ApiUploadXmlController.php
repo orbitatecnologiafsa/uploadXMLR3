@@ -14,9 +14,9 @@ class ApiUploadXmlController extends Controller
         $this->repositorio = new UploadXmlRepositorio();
     }
 
-    public function cadastroXML(Request $req)
+    public function cadastroXML(Request $req,$nome_pasta = '',$cnpj_cliente = '')
     {
-          return $this->repositorio->cadastroXML($req->header('nome_pasta'),$req->file('arquivo'),$req->header('cnpj_cliente'));
+          return $this->repositorio->cadastroXML($nome_pasta,$req->file('arquivo'),$cnpj_cliente);
     }
 
     public function deletarXML()

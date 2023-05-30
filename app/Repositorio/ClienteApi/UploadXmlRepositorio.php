@@ -18,6 +18,7 @@ class UploadXmlRepositorio
         $repositorio = new AdmRepositorio();
         $cliente = $repositorio->getClienteByCampoFirst(['cliente' => $cnpj_cliente]);
         $update =  new UltimoUpdate();
+        //return response()->json(['message' => is_null($arquivosXML)]);
         try {
             $diretorioDestino = storage_path('app/xmls' . '/' . $cnpj_cliente);
             $nomePasta = $nome_pasta;
