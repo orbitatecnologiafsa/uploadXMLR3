@@ -24,7 +24,7 @@
                         <div class="input-group input-group-alternative mb-3">
                             <input class="form-control form-control-alternative" name="cliente"
                                 value="{{ request()->input('cliente') ?? old('cliente') }}"
-                                placeholder="Nome do cliente ou cnpj ou os 4 primeiros digitos do cnpj" type="text">
+                                placeholder="Insira o cnpj" type="text">
 
                         </div>
                     </div>

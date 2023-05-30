@@ -35,7 +35,7 @@ class UploadRepositorio
         }
 
         $directory = storage_path("app/xmls/$cnpj/$pasta"); // Insira o caminho para o diretório que contém os arquivos que deseja compactar
-        $zipFile = public_path("downloads/$cnpj/$pasta.zip"); // Caminho para salvar o arquivo RAR
+        $zipFile = public_path("downloads/$cnpj/$cnpj-$pasta.zip"); // Caminho para salvar o arquivo RAR
 
         $zip = new ZipArchive();
         $zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
@@ -54,13 +54,13 @@ class UploadRepositorio
         }
 
         $zip->close();
-        $zipFilePath = public_path("downloads/$cnpj/$pasta.zip");; // Caminho completo para o arquivo zip dentro da pasta "public"
-        $zipFileName = "$pasta.zip"; // Nome do arquivo zip
+        $zipFilePath = public_path("downloads/$cnpj/$cnpj-$pasta.zip");; // Caminho completo para o arquivo zip dentro da pasta "public"
+        $zipFileName = "$cnpj-$pasta.zip"; // Nome do arquivo zip
 
         // Verifica se o arquivo zip existe
         if (file_exists($zipFilePath)) {
             // Gera o URL para o arquivo zip usando a função asset()
-            $zipFileUrl = asset("downloads/$cnpj/$pasta.zip");
+            $zipFileUrl = asset("downloads/$cnpj/$cnpj-$pasta.zip");
 
             // // Cria o link de download
              $downloadLink = '<a href="' . $zipFileUrl . '">Baixar arquivo ZIP</a>';

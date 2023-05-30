@@ -17,7 +17,7 @@ class AdmRepositorio
     {
         $dado = (object) $campo;
         $doc = HelperUtil::removerMascara($dado->cliente);
-        if ($cliente = $this->cliente->where('documento', 'LIKE', "%$doc%")->orWhere('nome', 'LIKE', "%$dado->cliente%")->paginate(9)) {
+        if ($cliente = $this->cliente->where('documento',$doc)->paginate(9)) {
             return $cliente;
         } else {
             return [];
@@ -27,8 +27,8 @@ class AdmRepositorio
     {
         $dado = (object) $campo;
         $doc = HelperUtil::removerMascara($dado->cliente);
-        if ($cliente = $this->cliente->where('documento', 'LIKE', "%$doc%")->orWhere('nome', 'LIKE', "%$dado->cliente%")->get()->first()) {
-            
+        if ($cliente = $this->cliente->where('documento', $doc)->get()->first()) {
+
             return $cliente;
         } else {
             return [];
