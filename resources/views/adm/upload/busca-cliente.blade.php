@@ -11,9 +11,10 @@
     @include('adm.partial.navbar')
 @endpush
 @section('conteudo')
-@if ($ultimo_up != '')
+
+@if ( count($cliente) >0)
 <div class="container-fluid py-4">
-    <h4 class="text-white">Ultima atualização {{ date('d/m/Y H:i:s',strtotime($ultimo_up)) }}</h4>
+    <h4 class="text-white">Ultima atualização  {{ $ultimo_up != '' ?  date('d/m/Y H:i:s',strtotime($ultimo_up)) : 'Ainda não foi atualizado na parte cliente, busque novamente  ou atualize a pagina!' }}</h4>
 </div>
 @endif
     <div class="container-fluid py-4" style="bottom: 100px;">
