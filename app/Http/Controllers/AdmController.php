@@ -49,7 +49,7 @@ class AdmController extends Controller
         $buscaPastas = $this->uploadRepositorio->getPasta($busca);
         if ($cliente) {
             if (!empty($buscaPastas)) {
-                return view('adm.upload.upload', ['cliente' => $cliente, 'pastas' => (object) $buscaPastas]);
+                return view('adm.upload.upload', ['cliente' => $cliente, 'pastas' => (object) $buscaPastas, "download" => '']);
             }
             return redirect()->to('adm/busca')->with('msg-error', 'Cliente não possui pastas salvas!');
         } else {
@@ -57,19 +57,18 @@ class AdmController extends Controller
         }
     }
 
-    public function getPasta(Request $req,$busca)
+    public function getPasta(Request $req, $busca)
     {
 
         $pasta = $req->input('busca_pasta');
-
-
-        return $this->uploadRepositorio->download($pasta,$busca);
-
-        // if($resposta){
-
-        //   return  redirect()->to("/adm/busca-files/$busca")->with('msg-success','Arquivo pronto feito o download');
-        // }else{
-        //    return redirect()->to("/adm/busca-files/$busca")->with('msg-error','Falha ao fazer download');
-        // }
+        $buscaPastas = $this->uploadRepositorio->getPasta($busca);
+       
+        $resposta = $this->uploadRepositorio->download($pasta, $busca);
+         $cliente = $this->repositorio->getClienteByCampoFirst(['cliente' => $busca]);
+        if ($resposta) {
+            return  view('adm.upload.upload', ['cliente' => $cliente, 'download'=>$resposta,"pastas" => (object)$buscaPastas]);
+        } else {
+            return view('adm.upload.upload', ['cliente' => $cliente, 'download'=>'','pastas' => (object) $buscaPastas]);
+        }
     }
 }

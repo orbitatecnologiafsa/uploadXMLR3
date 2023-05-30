@@ -12,12 +12,17 @@ class UploadXmlRepositorio
     {
 
         try {
-            $diretorioDestino = storage_path('app/xmls/' . $cnpj_cliente);
+            $diretorioDestino = storage_path('app/xmls' . '/' . $cnpj_cliente);
             $nomePasta = $nome_pasta;
-            $validarPasta = HelperUtil::pastasNomeGenerate();
+            $validarPasta = (array) HelperUtil::pastasNomeGenerate();
+
+
+
             $validar = false;
             foreach ($validarPasta as $key => $value) {
+
                 if ($value == $nome_pasta) {
+
                     // Verifica se o diretório de destino existe
                     if (!File::exists($diretorioDestino)) {
                         File::makeDirectory($diretorioDestino, 0755, true);
@@ -39,6 +44,7 @@ class UploadXmlRepositorio
                 // Itera sobre os arquivos e salva cada um em uma pasta dentro do diretório de destino
                 foreach ($arquivos as $arquivo) {
                     $nomeArquivo = $arquivo->getClientOriginalName();
+
                     $arquivo->move($caminhoDestino, $nomeArquivo);
                 }
 
@@ -46,7 +52,6 @@ class UploadXmlRepositorio
                 return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
             }
             return response()->json(['message' => 'Arquivos não  recebidos']);
-
         } catch (Exception $e) {
             return response()->json(['message' => 'erro ao receber Arquivos recebidos e salvos com sucesso', "error" => $e->getMessage()]);
         }

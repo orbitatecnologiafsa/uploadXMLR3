@@ -18,6 +18,7 @@ class HelperUtil{
         date_default_timezone_set('America/Sao_Paulo');
         $intMes = date('m'); //05
         $ano = date('Y');
+        $array = [];
         if ($intMes == 1) {
             $intAno = intval(date('Y'));
             $ano = strval($intAno - 1);
