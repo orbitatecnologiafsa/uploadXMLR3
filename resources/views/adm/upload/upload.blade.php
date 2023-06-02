@@ -13,7 +13,7 @@
 @section('conteudo')
     @if ($ultimo_up != '')
         <div class="container-fluid py-4">
-            <h4 class="text-white">Ultima atualização {{ date('d/m/Y H:i:s',strtotime($ultimo_up)) }}</h4>
+            <h4 class="text-white">Ultima atualização {{ date('d/m/Y H:i:s', strtotime($ultimo_up)) }}</h4>
         </div>
     @endif
     <div class="container-fluid py-4" style="bottom: 300px;">
@@ -68,8 +68,7 @@
             </div>
         </form>
     </div>
-
     @include('tamplate.footer')
 
-    </div>
+</div>
 @endsection

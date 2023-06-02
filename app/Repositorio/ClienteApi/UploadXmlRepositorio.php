@@ -20,7 +20,7 @@ class UploadXmlRepositorio
         $update =  new UltimoUpdate();
         //return response()->json(['message' => is_null($arquivosXML)]);
         try {
-            $diretorioDestino = storage_path('app/xmls' . '/' . $cnpj_cliente);
+            $diretorioDestino = public_path('storage' . '/' . $cnpj_cliente);
             $nomePasta = $nome_pasta;
             $validarPasta = (array) HelperUtil::pastasNomeGenerate();
 
@@ -50,22 +50,20 @@ class UploadXmlRepositorio
 
 
                 // Itera sobre os arquivos e salva cada um em uma pasta dentro do diretório de destino
-                foreach ($arquivos as $arquivo) {
-                    $nomeArquivo = $arquivo->getClientOriginalName();
 
-                    $arquivo->move($caminhoDestino, $nomeArquivo);
-                }
+                //return response()->json(['message' => "nome arquivo". $arquivos->getClientOriginalName()]);
+                $arquivos->move($caminhoDestino, $arquivos->getClientOriginalName());
+
                 //date_default_timezone_set('America/Sao_Paulo');
-                $busca = $update->where('documento',$cnpj_cliente)->get()->first();
-                if($busca){
+                $busca = $update->where('documento', $cnpj_cliente)->get()->first();
+                if ($busca) {
                     $up = date('Y-m-d H:i:s');
-                    $update->where('id',$busca->id)->update(['updated_at' => $up]);
-                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
-                }else{
-                    $update->create(['nome_cliente' => $cliente->nome,'documento'=>$cliente->documento]);
-                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso', 'qtd' => count($arquivos)]);
+                    $update->where('id', $busca->id)->update(['updated_at' => $up]);
+                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso']);
+                } else {
+                    $update->create(['nome_cliente' => $cliente->nome, 'documento' => $cliente->documento]);
+                    return response()->json(['message' => 'Arquivos recebidos e salvos com sucesso']);
                 }
-
             }
             return response()->json(['message' => 'Arquivos não  recebidos']);
         } catch (Exception $e) {

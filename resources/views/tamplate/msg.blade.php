@@ -6,10 +6,10 @@
                 }
 
                 error()
-                setTimeout(function() {
-                    // o teu código mouse hover aqui
-                    location.reload();
-                }, 3000);
+                // setTimeout(function() {
+                //     // o teu código mouse hover aqui
+                //     location.reload();
+                // }, 3000);
             </script>
         @endif
         @if (Session::has('msg-success'))
@@ -19,9 +19,9 @@
                     return swal("Tudo ok!", success, "success");
                 }
                 success();
-                setTimeout(function() {
-                    // o teu código mouse hover aqui
-                    location.reload();
-                }, 3000)
+                // setTimeout(function() {
+                //     // o teu código mouse hover aqui
+                //     location.reload();
+                // }, 3000)
             </script>
         @endif
